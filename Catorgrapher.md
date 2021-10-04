@@ -4,7 +4,14 @@
 1. What's the diff between scan-to-scan matching vs scna-to-map matching
 1. Particle Filter 
 1. Graph-based SLAM
-1. We use several scan of Tof to based a pseudo
+1. We use several scan of Tof to based a pseudo_scan, within the combining, how to we deal with the odometry error?
+1. Regulary run pose optimization
+
+## Workflow
+- finished submap and scan -> loop closure
+    - scan matcher try to find the scan in the submap
+    - if close enough --> add as a loop closing constraint
+
 
 
 
@@ -17,6 +24,7 @@
         1. collect data, in the test area, what is the odometry diff range
         1. formulate the range into math, and test in slam test dataset
 
+- 
 
 
 <!-- ### branch-and-bound approach -->

@@ -16,11 +16,21 @@
 
 
 ## Workflow
-- local SLAM
-    - build succession of submaps
+    - Overview
+        - local SLAM
+            - build succession of submaps
+            - locally consistent
+            
+        - global SLAM
+            - scan (generated in nodes)
+            - find loop closure constrauins
+    - Input
+        - Depth Info go through a bandpass filter
+            - manually set min, max range, numbers are choosen based on the sensor and robot task.
+            - related parameters: 
+                TRAJECTORY_BUILDER_nD.min_range, TRAJECTORY_BUILDER_nD.max_range
+                TRAJECTORY_BUILDER_2D.missing_data_ray_length, max_z, min_z
     
-- global SLAM
-    - scan (generated in nodes)
 
 
 
@@ -28,6 +38,11 @@
 - finished submap and scan -> loop closure
     - scan matcher try to find the scan in the submap
     - if close enough --> add as a loop closing constraint
+
+
+## ToCheck
+    - TRAJECTORY_BUILDER_nD.min_range, TRAJECTORY_BUILDER_nD.max_range
+    - TRAJECTORY_BUILDER_2D.missing_data_ray_length, max_z, min_z
 
 
 

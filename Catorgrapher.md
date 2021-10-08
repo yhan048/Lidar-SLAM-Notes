@@ -1,18 +1,21 @@
 # Cartographer Notes
 ## Questions
 1. Branch-and-bound approach
-1. What's the diff between scan-to-scan matching vs scna-to-map matching
-1. Particle Filter 
-1. Graph-based SLAM
-1. We use several scan of Tof to based a pseudo_scan, within the combining, how to we deal with the odometry error?
+1. What's the diff between scan-to-scan matching vs scan-to-map matching
+1. We use several scan of Tof to based a pseudo_scan, within the combining
+    - How to we deal with the odometry error?
+    - Also when combining a batch of sensor data, how to solve the motion shift.
 1. Regulary run pose optimization
     - Use the global constraint to re-ordered / shift the submaps?
-1. scan matcher, use the scan to match, then the constrains are:
-    - between scan_x and submap_1
-    - OR
-    - between submap_x and submap_1
 1. Resolution Problem, if the map is slightly off, like rotate 10 degree, then how the map matching is totally off?
-1.what is nodes and scan generated in nodes means in cartographer
+1. What is nodes and scan generated in nodes means in cartographer
+
+
+## Solved: 
+1. scan matcher, use the scan to match, then the constrains are:
+    - between scan_x and submap_1 [Scan to Submap]
+1. Pose Extrpolator
+    - Other sensor to predict where is the next scan location
 
 
 ## Workflow
@@ -27,11 +30,15 @@
     - Input
         - Depth Info go through a bandpass filter
             - manually set min, max range, numbers are choosen based on the sensor and robot task.
-            - related parameters: 
-                TRAJECTORY_BUILDER_nD.min_range, TRAJECTORY_BUILDER_nD.max_range
-                TRAJECTORY_BUILDER_2D.missing_data_ray_length, max_z, min_z
+        - sensor data delivered "in batch"
+        - point cloud downsampling(voxel_filter)
+    - Local SLAM
+        - inset new (assembled) scan into current submap, using initial guess from pose extrpolator.
+        - (poseExtrapolator/realTimeCorrelativeScanMatcher) + CeresScanMatcher
     
 
+
+        
 
 
 ###
@@ -41,8 +48,7 @@
 
 
 ## ToCheck
-    - TRAJECTORY_BUILDER_nD.min_range, TRAJECTORY_BUILDER_nD.max_range
-    - TRAJECTORY_BUILDER_2D.missing_data_ray_length, max_z, min_z
+    
 
 
 
@@ -65,4 +71,6 @@
 
 <!-- ### branch-and-bound approach -->
 
-###
+### Related Materials
+1. Particle Filter 
+1. Graph-based SLAM
